@@ -2,9 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma as db } from "../../../../../lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
-// Prevent static optimization
 export const dynamic = "force-dynamic";
-
 
 // GET /api/pins/[boardId]
 export async function GET(req: NextRequest) {
