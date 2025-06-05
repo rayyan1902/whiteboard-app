@@ -39,7 +39,6 @@ export default function WhiteboardPage() {
   const boardId = params.id as string;
   const [copied, setCopied] = useState(false);
 
-
   const [pins, setPins] = useState<Pin[]>([]);
   const [selectedPosition, setSelectedPosition] = useState<{
     x: number;
@@ -78,7 +77,6 @@ export default function WhiteboardPage() {
       });
   }, [whiteboardId, whiteboard?.id]);
 
- 
   const saveChanges = useMemo(() => {
     return debounce(async (json: string) => {
       try {
@@ -119,7 +117,6 @@ export default function WhiteboardPage() {
       }
     }, 500);
   }, [whiteboard, user, whiteboardId, router]);
-  
 
   useEffect(() => {
     if (!editorInstance) return;
@@ -221,12 +218,10 @@ export default function WhiteboardPage() {
 
   if (status === "loading")
     return (
-      <div className="container mx-auto h-full flex flex-col justify-center items-center text-center">
-        <span className="h-full flex flex-col justify-center">
-          <p className="text-3xl font-semibold animate-pulse absolute top-1/2">
+      <div className="">
+          <p className="text-3xl font-semibold animate-pulse absolute left-1/2 top-1/2">
             Loading...
           </p>
-        </span>
       </div>
     );
 
@@ -234,13 +229,11 @@ export default function WhiteboardPage() {
     <>
       {screenLoader ? (
         <>
-          <div className="container mx-auto h-full flex flex-col justify-center items-center text-center">
-            <span className="h-full flex flex-col justify-center">
-              <p className="text-3xl font-semibold animate-pulse absolute top-1/2">
-                Loading...
-              </p>
-            </span>
-          </div>
+          <div className="">
+          <p className="text-3xl font-semibold animate-pulse absolute left-1/2 top-1/2">
+            Please wait...
+          </p>
+      </div>
         </>
       ) : (
         <>
@@ -256,24 +249,63 @@ export default function WhiteboardPage() {
                 </p>
 
                 <span className="w-full flex justify-end gap-4">
-                  <button
-                    className={`bg-black ${
-                      loadingPublish ? "animate-pulse" : ""
-                    } cursor-pointer text-white font-semibold px-4 py-2 rounded-3xl`}
-                    onClick={handlePublishCanvas}
-                  >
-                    {loadingPublish ? "Loading..." : "Publish"}
-                  </button>
+                  {whiteboard && (
+                    <>
+                      {whiteboard && whiteboard?.status === "draft" ? (
+                        <button
+                          className={`bg-black ${
+                            loadingPublish ? "animate-pulse" : ""
+                          } cursor-pointer text-white font-semibold px-4 py-2 rounded-3xl`}
+                          onClick={handlePublishCanvas}
+                        >
+                          {loadingPublish ? "Loading..." : "Publish"}
+                        </button>
+                      ) : (
+                        <button
+                          className={`bg-black ${
+                            loadingPublish ? "animate-pulse" : ""
+                          }  text-white opacity-50 cursor-not-allowed font-semibold px-4 py-2 rounded-3xl`}
+                          // onClick={handlePublishCanvas}
+                          disabled
+                        >
+                          Published
+                        </button>
+                      )}
+                    </>
+                  )}
 
-                  <button
-                    onClick={() => {
-                     handleCopyLink(whiteboard?.publicId || "")
-                      handlePublishCanvas();
-                    }}
-                    className="bg-blue-600 font-semibold cursor-pointer text-white px-4 py-2 rounded-3xl"
-                  >
-            {copied ? "Link Copied!" : "Share"}
-            </button>
+                  {whiteboard && (
+                    <button
+                      onClick={() => {
+                        handleCopyLink(whiteboard?.publicId || "");
+                        handlePublishCanvas();
+                      }}
+                      className="bg-blue-600 font-semibold cursor-pointer text-white px-4 py-2 rounded-3xl"
+                    >
+                      {copied ? "Link Copied!" : "Share"}
+                    </button>
+                  )}
+
+                  {!whiteboard && (
+                    <span className="flex gap-4">
+                      <button
+                        className={`bg-black ${
+                          loadingPublish ? "animate-pulse" : ""
+                        }  text-white opacity-50 cursor-not-allowed font-semibold px-4 py-2 rounded-3xl`}
+                        // onClick={handlePublishCanvas}
+                        disabled
+                      >
+                        Publish
+                      </button>
+
+                      <button
+                        disabled
+                        className="bg-blue-600  font-semibold opacity-50 cursor-not-allowed text-white px-4 py-2 rounded-3xl"
+                      >
+                        {copied ? "Link Copied!" : "Share"}
+                      </button>
+                    </span>
+                  )}
                 </span>
               </span>
             </div>
@@ -289,8 +321,8 @@ export default function WhiteboardPage() {
             <div className="container mx-auto mt-10">
               <p className="font-bold">Instructions:</p>
               <li className="opacity-70">
-                Press &quot;C&quot; on the keyboard and then click on the canvas to view
-                or add new comments.
+                Press &quot;C&quot; on the keyboard and then click on the canvas
+                to view or add new comments.
               </li>
               <li className="opacity-70">
                 Your progress is being saved automatically in the real time.

@@ -134,7 +134,23 @@ const LandingPage: React.FC<WhiteboardProps> = ({ whiteboards }) => {
                 key={board.id}
               >
                 <p className="py-2 px-4 font-semibold">{board.title || "Untitled"}</p>
-                <p className="py-2 px-4 ">Status: {board.status || "draft"}</p>
+                <p className="py-2 px-4 font-semibold">Status: {board.status || "draft"}</p>
+               
+                <Link
+                  className="cursor-pointer text-white font-semibold py-2 px-4 hover:opacity-50 transition-all duration-300  rounded-3xl text-sm items-center flex justify-center text-center bg-blue-500"
+                  href={`/whiteboard/${board.id}`}
+                >
+                  <button>Open</button>
+                </Link>
+                <button
+                  onClick={() => handleDeleteWhiteboard(board.id)}
+                  className={`cursor-pointer    ${
+                    deleting === board.id ? "animate-pulse" : ""
+                  } hover:opacity-50 transition-all duration-300  text-white font-semibold py-2 px-4 rounded-3xl text-sm items-center text-center bg-red-500`}
+                >
+                  {deleting === board.id ? "Deleting" : "Delete"}
+                </button>
+
                 {board.status === "draft" ? (
                   <button
                     disabled={board.status === "draft"}
@@ -152,20 +168,7 @@ const LandingPage: React.FC<WhiteboardProps> = ({ whiteboards }) => {
                   </button>
                 )}
 
-                <Link
-                  className="cursor-pointer text-white font-semibold py-2 px-4 hover:opacity-50 transition-all duration-300  rounded-3xl text-sm items-center flex justify-center text-center bg-blue-500"
-                  href={`/whiteboard/${board.id}`}
-                >
-                  <button>Open</button>
-                </Link>
-                <button
-                  onClick={() => handleDeleteWhiteboard(board.id)}
-                  className={`cursor-pointer    ${
-                    deleting === board.id ? "animate-pulse" : ""
-                  } hover:opacity-50 transition-all duration-300  text-white font-semibold py-2 px-4 rounded-3xl text-sm items-center text-center bg-red-500`}
-                >
-                  {deleting === board.id ? "Deleting" : "Delete"}
-                </button>
+
               </li>
             ))}
           </ul>
