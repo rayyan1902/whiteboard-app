@@ -1,8 +1,18 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
+Clone the repo
 
-First, run the development server:
+## Install dependencies
+npm install
+
+## Set up environment variables
+DATABASE_URL=your_postgres_db_url
+CLERK_SECRET_KEY=your_clerk_secret
+CLERK_PUBLISHABLE_KEY=your_clerk_publishable
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable
+
+then, run the development server:
 
 ```bash
 npm run dev
