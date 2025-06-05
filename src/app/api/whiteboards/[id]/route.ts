@@ -3,6 +3,10 @@ import { prisma } from "../../../../../lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
 
+export const dynamic = "force-dynamic";
+
+
+
 function getIdFromUrl(req: NextRequest) {
   return req.nextUrl.pathname.split("/").pop() as string;
 }

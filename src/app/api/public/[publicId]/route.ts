@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../lib/prisma";
 
+export const dynamic = "force-dynamic";
+
+
 export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const publicId = url.pathname.split("/").pop() as string;
