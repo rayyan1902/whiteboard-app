@@ -1,4 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Real-Time Collaborative Whiteboard App
+
+A collaborative whiteboard application built with **Next.js 15+**, **Clerk**, **Prisma**, **Tailwind CSS**, and **PostgreSQL (Neon)**. Users can create, share, and edit whiteboards in real-time.
+
+## Features
+
+- User Authentication (via Clerk)
+- Create, edit, delete whiteboards
+- Share public whiteboard via link
+- Status filter (Draft / Published)
+- Real-time collaborative updates (using `useDebounce`)
+- Responsive UI with Tailwind
+
+## Technologies Used
+
+- Next.js 15 (App Router)
+- TypeScript
+- Clerk Auth
+- Prisma ORM
+- PostgreSQL (Neon)
+- Tailwind CSS
+
 
 ## Getting Started
 Clone the repo
