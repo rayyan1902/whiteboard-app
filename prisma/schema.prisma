@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String       @id @default(cuid())
+  clerkId     String       @unique
+  name        String?
+  email       String?
+  whiteboards Whiteboard[]
+  createdAt   DateTime     @default(now())
+}
+
+model Whiteboard {
+  id        String    @id @default(cuid())
+  title     String
+  status    String // "draft" or "published"
+  content   Json // TLDraw content
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  comments  Comment[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  publicId   String   @unique @default(uuid())
+  pins      Pin[]     @relation("WhiteboardToPins")
+}
+
+model Comment {
+  id           String   @id @default(cuid())
+  content      String
+  x            Float
+  y            Float
+  whiteboardId String
+  authorName   String
+  createdAt    DateTime @default(now())
+
+  whiteboard Whiteboard @relation(fields: [whiteboardId], references: [id])
+}
+
+model Pin {
+  id         String     @id @default(cuid())
+  boardId    String
+  x          Float
+  y          Float
+  text       String
+  authorId   String
+  authorName String
+  createdAt  DateTime   @default(now())
+  whiteboard Whiteboard @relation("WhiteboardToPins", fields: [boardId], references: [id], onDelete: Cascade)
+}
