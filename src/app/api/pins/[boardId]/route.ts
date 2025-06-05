@@ -3,7 +3,7 @@ import { prisma as db } from "../../../../../lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
 export async function GET(
-  _req: NextRequest,
+  _req: Request,
   { params }: { params: { boardId: string } }
 ) {
   const pins = await db.pin.findMany({
@@ -15,7 +15,7 @@ export async function GET(
 
 // POST /api/pins/[boardId]
 export async function POST(
-  req: NextRequest,
+  req: Request,
   { params }: { params: { boardId: string } }
 ) {
   const { userId } = await auth();
